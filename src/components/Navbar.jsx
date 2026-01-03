@@ -1,24 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import IndiusLogoDark from "../assets/images/logo/IndiusLogoDark.png";
 import IndiusLogoWhite from "../assets/images/logo/IndiusLogoWhite.png";
 
-const Navbar = () => {
+const NAV_LINKS = ["Home", "About", "Hospitals", "Contact"];
+
+const Navbar = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      if (scrolled !== isScrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled]);
+
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
   }, []);
 
-  const links = ["Home", "About", "Hospitals", "Contact"];
+  const handleLogoClick = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.pushState(
+      "",
+      document.title,
+      window.location.pathname + window.location.search
+    );
+  }, []);
+
+  const handleNavLinkClick = useCallback((e, link) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    // Delayed scroll to allow menu animation to start closing
+    setTimeout(() => {
+      const element = document.getElementById(link.toLowerCase());
+      if (element) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        window.history.pushState(null, null, `#${link.toLowerCase()}`);
+      }
+    }, 300);
+  }, []);
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-500 will-change-transform ${
         scrolled
           ? "bg-white/90 backdrop-blur-md py-4 border-b border-slate-100"
           : "bg-transparent py-6"
@@ -27,14 +70,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div
           className="flex items-center gap-2 cursor-pointer"
-          onClick={() => {
-            window.scrollTo(0, 0);
-            window.history.pushState(
-              "",
-              document.title,
-              window.location.pathname + window.location.search
-            );
-          }}
+          onClick={handleLogoClick}
         >
           <img
             src={scrolled ? IndiusLogoDark : IndiusLogoWhite}
@@ -58,7 +94,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
@@ -72,7 +108,7 @@ const Navbar = () => {
         </div>
 
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleMenu}
           className={`md:hidden ${scrolled ? "text-navy" : "text-white"}`}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -89,39 +125,11 @@ const Navbar = () => {
             className="md:hidden fixed top-[88px] left-0 w-full bg-white border-t border-slate-100 overflow-hidden shadow-xl z-40"
           >
             <div className="flex flex-col text-center divide-y divide-slate-50">
-              {links.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <a
                   key={link}
                   href={`#${link.toLowerCase()}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsOpen(false);
-                    setTimeout(() => {
-                      const element = document.getElementById(
-                        link.toLowerCase()
-                      );
-                      if (element) {
-                        const offset = 80;
-                        const bodyRect =
-                          document.body.getBoundingClientRect().top;
-                        const elementRect = element.getBoundingClientRect().top;
-                        const elementPosition = elementRect - bodyRect;
-                        const offsetPosition = elementPosition - offset;
-
-                        window.scrollTo({
-                          top: offsetPosition,
-                          behavior: "smooth",
-                        });
-
-                        // Update URL hash manually without jump
-                        window.history.pushState(
-                          null,
-                          null,
-                          `#${link.toLowerCase()}`
-                        );
-                      }
-                    }, 300);
-                  }}
+                  onClick={(e) => handleNavLinkClick(e, link)}
                   className="text-sm font-bold uppercase tracking-[0.2em] text-navy hover:text-medical hover:bg-slate-50 py-6 transition-all active:scale-95"
                 >
                   {link}
@@ -133,6 +141,6 @@ const Navbar = () => {
       </AnimatePresence>
     </nav>
   );
-};
+});
 
 export default Navbar;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -8,82 +8,98 @@ import slider3 from "../assets/images/slider/slider3.jpg";
 import slider4 from "../assets/images/slider/slider4.jpg";
 
 const SLIDES = [
-  {
-    id: 1,
-    image: slider1,
-    title: "Excellence in Global Healing",
-  },
-  {
-    id: 2,
-    image: slider2,
-    title: "Advanced Surgical Infrastructure",
-  },
-  {
-    id: 3,
-    image: slider3,
-    title: "Compassionate Patient Care",
-  },
-  {
-    id: 4,
-    image: slider4,
-    title: "Innovative Healthcare Solutions",
-  },
+  { id: 1, image: slider1, title: "Excellence in Global Healing" },
+  { id: 2, image: slider2, title: "Advanced Surgical Infrastructure" },
+  { id: 3, image: slider3, title: "Compassionate Patient Care" },
+  { id: 4, image: slider4, title: "Innovative Healthcare Solutions" },
 ];
 
-const Hero = () => {
+const Hero = memo(() => {
   const [current, setCurrent] = useState(0);
+
+  // Preload images for smooth transition
+  useEffect(() => {
+    SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(
       () => setCurrent((prev) => (prev + 1) % SLIDES.length),
-      3000
+      5000
     );
     return () => clearInterval(timer);
+  }, []);
+
+  const handleScrollClick = useCallback(() => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
+
+  const handleDotClick = useCallback((idx) => {
+    setCurrent(idx);
   }, []);
 
   return (
     <section
       id="home"
-      className="relative h-screen min-h-[700px] w-full bg-navy overflow-hidden"
+      className="relative h-screen min-h-[700px] w-full bg-black overflow-hidden"
     >
-      <AnimatePresence>
-        <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
-        >
-          <motion.div
-            className="absolute inset-0 bg-cover bg-center"
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.1 }}
-            transition={{ duration: 10, ease: "linear" }}
-            style={{ backgroundImage: `url(${SLIDES[current].image})` }}
-          />
-          <div className="absolute inset-0 bg-navy/40" />
-        </motion.div>
-      </AnimatePresence>
+      {/* Background Slides - Z-Stacked Crossfade */}
+      <div className="absolute inset-0 z-0">
+        {SLIDES.map((slide, index) => {
+          const isActive = current === index;
+          return (
+            <motion.div
+              key={slide.id}
+              initial={false}
+              animate={{
+                opacity: isActive ? 1 : 0,
+                scale: isActive ? 1.1 : 1.05,
+              }}
+              transition={{
+                opacity: { duration: 1.5, ease: "easeInOut" },
+                scale: { duration: 10, ease: "linear" },
+              }}
+              className="absolute inset-0 bg-cover bg-center will-change-transform"
+              style={{
+                backgroundImage: `url(${slide.image})`,
+                zIndex: isActive ? 2 : 1,
+              }}
+            >
+              <div className="absolute inset-0 bg-navy/50" />
+            </motion.div>
+          );
+        })}
+      </div>
 
       <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-center items-center text-center">
-        <motion.div
-          key={current}
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -30, opacity: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="max-w-4xl mb-10"
-        >
-          <h1 className="text-5xl md:text-7xl font-light text-white tracking-tighter leading-tight">
-            {SLIDES[current].title}
-          </h1>
-        </motion.div>
+        <div className="relative h-40 w-full flex items-center justify-center mb-10">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={current}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute max-w-4xl"
+            >
+              <h1 className="text-5xl md:text-7xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl">
+                {SLIDES[current].title}
+              </h1>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <motion.a
           href="https://wa.me/23057092332"
           target="_blank"
           rel="noopener noreferrer"
+          style={{ willChange: "transform" }}
           animate={{ scale: [1, 1.05, 1] }}
           transition={{
             duration: 2,
@@ -92,18 +108,18 @@ const Hero = () => {
           }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-medical text-white px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-white hover:text-navy transition-colors"
+          className="inline-flex items-center gap-3 bg-medical text-white px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-white hover:text-navy transition-colors relative z-20"
         >
           <MessageCircle size={16} /> Connect on WhatsApp
         </motion.a>
       </div>
 
-      <div className="absolute bottom-10 left-0 w-full flex flex-col items-center justify-end gap-8 pb-8 pointer-events-none">
-        <div className="flex gap-3 pointer-events-auto">
+      <div className="absolute bottom-10 left-0 w-full flex flex-col items-center justify-end gap-8 pb-8 z-20">
+        <div className="flex gap-3">
           {SLIDES.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setCurrent(idx)}
+              onClick={() => handleDotClick(idx)}
               className={`h-1 rounded-full transition-all duration-500 ${
                 idx === current ? "w-12 bg-white" : "w-4 bg-white/20"
               }`}
@@ -114,21 +130,17 @@ const Hero = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-2 pointer-events-auto cursor-pointer"
-          onClick={() =>
-            document
-              .getElementById("about")
-              .scrollIntoView({ behavior: "smooth" })
-          }
+          className="flex flex-col items-center gap-2 cursor-pointer group"
+          onClick={handleScrollClick}
         >
-          <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.3em] writing-mode-vertical">
+          <span className="text-[9px] text-white/40 font-bold uppercase tracking-[0.3em] writing-mode-vertical group-hover:text-white transition-colors">
             Scroll
           </span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+          <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent group-hover:from-white transition-all" />
         </motion.div>
       </div>
     </section>
   );
-};
+});
 
 export default Hero;

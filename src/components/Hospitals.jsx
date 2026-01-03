@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { MapPin, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect, memo, useMemo } from "react";
+import { MapPin } from "lucide-react";
 import SafeImage from "./SafeImage";
 
 import hospital1 from "../assets/images/hospitals/apollo.jpg";
@@ -48,7 +47,7 @@ const HOSPITALS = [
   {
     id: 5,
     name: "Yashoda Hospital",
-    city: "Ghaziabad & Delhi",
+    city: "Ghazi Ghaziabad & Delhi",
     specialties: ["Joint Replacement", "Spine Surgery", "Oncology"],
     image: hospital5,
   },
@@ -103,49 +102,81 @@ const HOSPITALS = [
   },
 ];
 
-const Hospitals = () => {
-  const scrollRef = React.useRef(null);
+const ITEM_WIDTH = 272;
+const SPEED = 1;
+
+const HospitalCard = memo(({ hospital }) => (
+  <div className="w-[230px] flex-shrink-0 cursor-pointer group/card will-change-transform">
+    <div className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 border border-slate-100 h-full flex flex-col">
+      <div className="h-36 w-full overflow-hidden relative">
+        <SafeImage
+          src={hospital.image}
+          alt={hospital.name}
+          className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+      </div>
+
+      <div className="p-4 flex flex-col items-center text-center gap-2">
+        <div className="flex flex-col items-center gap-1">
+          <h3 className="text-base font-bold text-navy tracking-tight leading-tight group-hover/card:text-medical transition-colors line-clamp-1">
+            {hospital.name}
+          </h3>
+          <div className="px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100 flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-widest text-slate-400">
+            <MapPin size={8} className="text-medical" />
+            {hospital.city.split(",")[0]}
+          </div>
+        </div>
+
+        <div className="w-6 h-px bg-slate-100 my-1" />
+
+        <div className="flex flex-wrap justify-center gap-1">
+          {hospital.specialties.slice(0, 3).map((spec) => (
+            <span
+              key={spec}
+              className="px-1.5 py-0.5 rounded bg-white border border-slate-100 shadow-sm text-[8px] font-bold text-slate-500 group-hover/card:border-medical/20 group-hover/card:text-navy transition-all"
+            >
+              {spec}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+));
+
+const Hospitals = memo(() => {
+  const scrollRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Configuration
-  const itemWidth = 272; // 240px card + 32px gap
-  const speed = 1; // Pixels per frame
-
-  // Auto-scroll logic
-  React.useEffect(() => {
+  useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
     let animationFrameId;
+    const setWidth = HOSPITALS.length * ITEM_WIDTH;
 
     const loop = () => {
       if (!isPaused) {
-        // Main auto-scroll
-        scrollContainer.scrollLeft += speed;
+        scrollContainer.scrollLeft += SPEED;
 
-        // Infinite Loop Logic:
-        // We render 4 sets. We start in the middle.
-        // Seamless reset condition:
-        // One set width
-        const setWidth = HOSPITALS.length * itemWidth;
-
-        // If we've scrolled past the second set, jump back to first
         if (scrollContainer.scrollLeft >= setWidth * 2) {
           scrollContainer.scrollLeft -= setWidth;
-        }
-        // If we've scrolled to start (via back button), jump forward
-        else if (scrollContainer.scrollLeft <= 0) {
+        } else if (scrollContainer.scrollLeft <= 0) {
           scrollContainer.scrollLeft += setWidth;
         }
       }
       animationFrameId = requestAnimationFrame(loop);
     };
 
-    // Start loop
     animationFrameId = requestAnimationFrame(loop);
-
     return () => cancelAnimationFrame(animationFrameId);
   }, [isPaused]);
+
+  const fullHospitals = useMemo(
+    () => [...HOSPITALS, ...HOSPITALS, ...HOSPITALS, ...HOSPITALS],
+    []
+  );
 
   return (
     <section id="hospitals" className="py-24 bg-white overflow-hidden relative">
@@ -160,70 +191,22 @@ const Hospitals = () => {
         </div>
       </div>
 
-      {/* Infinite Marquee Slider Container */}
       <div
         className="relative w-full group"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Gradient Fades */}
         <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-        {/* Scrollable Area */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-hidden no-scrollbar pb-8" // horizontal scroll hidden bars
+          className="flex overflow-x-hidden no-scrollbar pb-8 will-change-transform"
           style={{ gap: "32px" }}
         >
-          {/* Render 4 sets of data to ensure robust infinite looping buffer */}
-          {[...HOSPITALS, ...HOSPITALS, ...HOSPITALS, ...HOSPITALS].map(
-            (hospital, idx) => (
-              <div
-                key={`${hospital.id}-${idx}`}
-                className="w-[230px] flex-shrink-0 cursor-pointer group/card"
-              >
-                <div className="bg-white rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 border border-slate-100 h-full flex flex-col">
-                  {/* Maximized Image Area */}
-                  <div className="h-36 w-full overflow-hidden relative">
-                    <SafeImage
-                      src={hospital.image}
-                      alt={hospital.name}
-                      className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
-                    />
-                    {/* Subtle gradient at bottom of image area for transition */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
-                  </div>
-
-                  {/* Content Area */}
-                  <div className="p-4 flex flex-col items-center text-center gap-2">
-                    <div className="flex flex-col items-center gap-1">
-                      <h3 className="text-base font-bold text-navy tracking-tight leading-tight group-hover/card:text-medical transition-colors">
-                        {hospital.name}
-                      </h3>
-                      <div className="px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100 flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-widest text-slate-400">
-                        <MapPin size={8} className="text-medical" />{" "}
-                        {hospital.city.split(",")[0]}
-                      </div>
-                    </div>
-
-                    <div className="w-6 h-px bg-slate-100 my-1" />
-
-                    <div className="flex flex-wrap justify-center gap-1">
-                      {hospital.specialties.map((spec) => (
-                        <span
-                          key={spec}
-                          className="px-1.5 py-0.5 rounded bg-white border border-slate-100 shadow-sm text-[8px] font-bold text-slate-500 group-hover/card:border-medical/20 group-hover/card:text-navy transition-all"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          )}
+          {fullHospitals.map((hospital, idx) => (
+            <HospitalCard key={`${hospital.id}-${idx}`} hospital={hospital} />
+          ))}
         </div>
       </div>
 
@@ -238,6 +221,6 @@ const Hospitals = () => {
       `}</style>
     </section>
   );
-};
+});
 
 export default Hospitals;

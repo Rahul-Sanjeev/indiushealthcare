@@ -1,8 +1,15 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { Facebook, Linkedin, Instagram } from "lucide-react";
 import IndiusLogoWhite from "../assets/images/logo/IndiusLogoWhite.png";
 
-const Footer = ({ onOpenLegal }) => {
+const Footer = memo(({ onOpenLegal }) => {
+  const handleLegalClick = useCallback(
+    (tab) => {
+      onOpenLegal(tab);
+    },
+    [onOpenLegal]
+  );
+
   return (
     <footer className="bg-navy/95 backdrop-blur-xl text-slate-400 py-16 border-t border-white/5 relative overflow-hidden">
       {/* Subtle ambient glow */}
@@ -66,19 +73,19 @@ const Footer = ({ onOpenLegal }) => {
             </h4>
             <nav className="flex flex-col gap-4 text-sm font-medium tracking-wide">
               <button
-                onClick={() => onOpenLegal("privacy")}
+                onClick={() => handleLegalClick("privacy")}
                 className="hover:text-medical transition-colors"
               >
                 Privacy Policy
               </button>
               <button
-                onClick={() => onOpenLegal("terms")}
+                onClick={() => handleLegalClick("terms")}
                 className="hover:text-medical transition-colors"
               >
                 Terms of Service
               </button>
               <button
-                onClick={() => onOpenLegal("patient")}
+                onClick={() => handleLegalClick("patient")}
                 className="hover:text-medical transition-colors"
               >
                 Patient Agreement
@@ -133,6 +140,6 @@ const Footer = ({ onOpenLegal }) => {
       </div>
     </footer>
   );
-};
+});
 
 export default Footer;

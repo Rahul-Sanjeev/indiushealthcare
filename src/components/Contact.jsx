@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { Phone, Mail } from "lucide-react";
 
-const Contact = () => {
+const Contact = memo(() => {
   return (
     <section id="contact" className="py-16 md:py-24 bg-slate-50">
       <div className="container mx-auto px-6">
@@ -15,7 +15,10 @@ const Contact = () => {
               <span className="font-bold">To Recovery.</span>
             </h2>
 
-            <form className="w-full space-y-3 mb-6 text-left">
+            <form
+              className="w-full space-y-3 mb-6 text-left"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="group">
                   <label className="text-[8px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block group-focus-within:text-medical transition-colors">
@@ -95,6 +98,6 @@ const Contact = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Contact;

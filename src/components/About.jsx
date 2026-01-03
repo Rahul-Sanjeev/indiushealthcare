@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Stethoscope, Plane, Building2, HeartPulse } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -29,7 +29,7 @@ const JOURNEY = [
   },
 ];
 
-const About = () => {
+const About = memo(() => {
   return (
     <section
       id="about"
@@ -50,9 +50,9 @@ const About = () => {
               key={step.id}
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: idx * 0.1 }}
-              className="text-center group"
+              className="text-center group will-change-transform"
             >
               <div className="w-16 h-16 mx-auto bg-white rounded-2xl flex items-center justify-center text-navy shadow-sm mb-6 group-hover:bg-medical group-hover:text-white transition-colors">
                 {step.icon}
@@ -69,6 +69,6 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
 export default About;

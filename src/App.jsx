@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -17,20 +17,20 @@ function App() {
     // Force scroll to top on load/refresh
     window.scrollTo(0, 0);
 
-    // Check if splash screen has been shown before
-    // Optional: if you want splash only once per session, use sessionStorage
-    // const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-
     const timer = setTimeout(() => {
       setLoading(false);
-      // sessionStorage.setItem('hasSeenSplash', 'true');
     }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const openLegal = (tab) => setLegal({ isOpen: true, tab });
-  const closeLegal = () => setLegal({ ...legal, isOpen: false });
+  const openLegal = useCallback((tab) => {
+    setLegal({ isOpen: true, tab });
+  }, []);
+
+  const closeLegal = useCallback(() => {
+    setLegal((prev) => ({ ...prev, isOpen: false }));
+  }, []);
 
   return (
     <div className="antialiased w-full overflow-x-hidden font-sans selection:bg-medical/20 selection:text-medical scroll-smooth">

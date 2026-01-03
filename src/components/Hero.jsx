@@ -77,7 +77,7 @@ const Hero = memo(() => {
         })}
       </div>
 
-      <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-start md:justify-center items-center text-center pt-32 md:pt-0">
+      <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-start md:justify-center items-center text-center pt-40 md:pt-32">
         <div className="relative h-32 md:h-40 w-full flex items-center justify-center mb-6 md:mb-10">
           <AnimatePresence initial={false}>
             <motion.div

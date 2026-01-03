@@ -49,7 +49,7 @@ function App() {
               transition={{ duration: 1.5, ease: "easeOut" }}
               src={IndiusIntro}
               alt="Indius Healthcare"
-              className="max-w-[80%] max-h-[40vh] w-auto h-auto object-contain"
+              className="max-w-[80%] min-h-[100vh] w-full h-full object-contain"
             />
           </motion.div>
         )}

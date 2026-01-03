@@ -11,6 +11,17 @@ const Navbar = memo(() => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 20;
       if (scrolled !== isScrolled) {
@@ -28,6 +39,7 @@ const Navbar = memo(() => {
 
   const handleLogoClick = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsOpen(false);
     window.history.pushState(
       "",
       document.title,
@@ -61,31 +73,31 @@ const Navbar = memo(() => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 will-change-transform ${
-        scrolled
+      className={`fixed top-0 w-full z-[100] transition-all duration-500 will-change-transform ${
+        scrolled || isOpen
           ? "bg-white/90 backdrop-blur-md py-4 border-b border-slate-100"
           : "bg-transparent py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex items-center gap-2 cursor-pointer relative z-[110]"
           onClick={handleLogoClick}
         >
           <img
-            src={scrolled ? IndiusLogoDark : IndiusLogoWhite}
+            src={scrolled || isOpen ? IndiusLogoDark : IndiusLogoWhite}
             alt="Indius Healthcare"
-            className="h-10 w-auto object-contain transition-all duration-300"
+            className="h-9 w-auto object-contain transition-all duration-300"
           />
           <div
-            className={`flex flex-row gap-2 font-black text-[15px] tracking-tighter leading-none ${
-              scrolled ? "text-navy" : "text-white"
+            className={`flex flex-row gap-2 font-black text-[14px] tracking-tighter leading-none ${
+              scrolled || isOpen ? "text-navy" : "text-white"
             }`}
           >
             INDIUS{" "}
             <span
               className={`block font-bold tracking-[0.3em] uppercase opacity-60 ${
-                scrolled ? "text-navy" : "text-white"
+                scrolled || isOpen ? "text-navy" : "text-white"
               }`}
             >
               Healthcare
@@ -98,7 +110,7 @@ const Navbar = memo(() => {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className={`text-[15px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-medical ${
+              className={`text-[14px] font-bold uppercase tracking-[0.25em] transition-colors hover:text-medical ${
                 scrolled ? "text-navy/60" : "text-white/80"
               }`}
             >
@@ -109,31 +121,36 @@ const Navbar = memo(() => {
 
         <button
           onClick={toggleMenu}
-          className={`md:hidden ${scrolled ? "text-navy" : "text-white"}`}
+          className={`relative z-[110] p-2 min-h-[44px] min-w-[44px] flex items-center justify-center md:hidden ${
+            scrolled || isOpen ? "text-navy" : "text-white"
+          }`}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "100vh", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden fixed top-[88px] left-0 w-full bg-white border-t border-slate-100 overflow-hidden shadow-xl z-40"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden fixed inset-0 w-full h-screen bg-white/95 backdrop-blur-xl z-[90] flex items-center justify-center"
           >
-            <div className="flex flex-col text-center divide-y divide-slate-50">
-              {NAV_LINKS.map((link) => (
-                <a
+            <div className="flex flex-col items-center gap-10">
+              {NAV_LINKS.map((link, idx) => (
+                <motion.a
                   key={link}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + idx * 0.05 }}
                   href={`#${link.toLowerCase()}`}
                   onClick={(e) => handleNavLinkClick(e, link)}
-                  className="text-sm font-bold uppercase tracking-[0.2em] text-navy hover:text-medical hover:bg-slate-50 py-6 transition-all active:scale-95"
+                  className="text-sm font-bold uppercase tracking-[0.3em] text-navy hover:text-medical p-4 min-h-[44px]"
                 >
                   {link}
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>

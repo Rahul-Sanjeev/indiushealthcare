@@ -47,7 +47,7 @@ const Hero = memo(() => {
   return (
     <section
       id="home"
-      className="relative h-screen min-h-[700px] w-full bg-black overflow-hidden"
+      className="relative min-h-[100dvh] w-full bg-black overflow-hidden"
     >
       {/* Background Slides - Z-Stacked Crossfade */}
       <div className="absolute inset-0 z-0">
@@ -77,8 +77,8 @@ const Hero = memo(() => {
         })}
       </div>
 
-      <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-center items-center text-center">
-        <div className="relative h-40 w-full flex items-center justify-center mb-10">
+      <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-start md:justify-center items-center text-center pt-32 md:pt-0">
+        <div className="relative h-32 md:h-40 w-full flex items-center justify-center mb-6 md:mb-10">
           <AnimatePresence initial={false}>
             <motion.div
               key={current}
@@ -88,7 +88,7 @@ const Hero = memo(() => {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="absolute max-w-4xl"
             >
-              <h1 className="text-5xl md:text-7xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl">
+              <h1 className="text-3xl md:text-7xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl px-4">
                 {SLIDES[current].title}
               </h1>
             </motion.div>

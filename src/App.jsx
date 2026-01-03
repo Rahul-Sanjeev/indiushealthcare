@@ -41,7 +41,7 @@ function App() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className="fixed inset-0 z-[100] bg-white flex items-center justify-center p-6"
+            className="fixed inset-0 z-[200] bg-white flex items-center justify-center p-6"
           >
             <motion.img
               initial={{ scale: 0.8, opacity: 0 }}
@@ -49,7 +49,7 @@ function App() {
               transition={{ duration: 1.5, ease: "easeOut" }}
               src={IndiusIntro}
               alt="Indius Healthcare"
-              className="max-w-full max-h-[30vh] w-auto h-auto object-contain"
+              className="max-w-[80%] max-h-[40vh] w-auto h-auto object-contain"
             />
           </motion.div>
         )}

@@ -1,40 +1,100 @@
-import React from 'react';
-import { Phone, Mail } from 'lucide-react';
+import React from "react";
+import { Phone, Mail } from "lucide-react";
 
 const Contact = () => {
-    return (
-        <section id="contact" className="py-32 bg-slate-50">
-            <div className="container mx-auto px-6">
-                <div className="max-w-4xl mx-auto bg-white rounded-[3rem] p-12 md:p-20 shadow-xl border border-slate-100 text-center relative overflow-hidden">
-                    <div className="relative z-10">
-                        <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">Concierge Desk</span>
-                        <h2 className="text-3xl md:text-5xl font-light text-navy tracking-tighter mb-12">
-                            Start Your Journey <br /> <span className="font-bold">To Recovery.</span>
-                        </h2>
-                        <form className="max-w-md mx-auto space-y-4 mb-10 text-left">
-                            <div>
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block">Patient Name</label>
-                                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-full px-6 py-4 text-sm focus:outline-none focus:border-medical transition-colors" placeholder="Full Name" />
-                            </div>
-                            <div>
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block">Medical Concern</label>
-                                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-full px-6 py-4 text-sm focus:outline-none focus:border-medical transition-colors" placeholder="Describe briefly" />
-                            </div>
-                            <button className="w-full bg-navy text-white rounded-full py-4 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-medical transition-colors shadow-lg">Submit Request</button>
-                        </form>
-                        <div className="flex justify-center gap-8 pt-8 border-t border-slate-100">
-                            <div className="flex items-center gap-2 text-slate-400 hover:text-navy transition-colors">
-                                <Phone size={16} /> <span className="text-xs font-bold tracking-widest">+230 123 4567</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-400 hover:text-navy transition-colors">
-                                <Mail size={16} /> <span className="text-xs font-bold tracking-widest">care@indius.health</span>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <section id="contact" className="py-16 md:py-24 bg-slate-50">
+      <div className="container mx-auto px-6">
+        <div className="max-w-xl mx-auto bg-white rounded-[2rem] p-6 md:p-10 shadow-xl border border-slate-100 text-center relative overflow-hidden">
+          <div className="relative z-10 w-full">
+            <span className="text-medical text-[9px] font-bold uppercase tracking-[0.4em] block mb-3">
+              Concierge Desk
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-navy tracking-tighter mb-6 leading-tight">
+              Start Your Journey <br />{" "}
+              <span className="font-bold">To Recovery.</span>
+            </h2>
+
+            <form className="w-full space-y-3 mb-6 text-left">
+              <div className="grid md:grid-cols-2 gap-3">
+                <div className="group">
+                  <label className="text-[8px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block group-focus-within:text-medical transition-colors">
+                    Patient Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
+                    placeholder="Full Name"
+                  />
                 </div>
+                <div className="group">
+                  <label className="text-[8px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block group-focus-within:text-medical transition-colors">
+                    Phone / WhatsApp
+                  </label>
+                  <input
+                    type="tel"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
+                    placeholder="+230 1234 5678"
+                  />
+                </div>
+              </div>
+
+              <div className="group">
+                <label className="text-[8px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block group-focus-within:text-medical transition-colors">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
+                  placeholder="name@example.com"
+                />
+              </div>
+
+              <div className="group">
+                <label className="text-[8px] font-bold uppercase tracking-widest text-slate-400 pl-4 mb-1 block group-focus-within:text-medical transition-colors">
+                  Medical Concern
+                </label>
+                <textarea
+                  rows="2"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300 resize-none"
+                  placeholder="Briefly describe your query..."
+                ></textarea>
+              </div>
+
+              <button className="w-full bg-navy text-white rounded-xl py-3.5 text-[9px] font-bold uppercase tracking-[0.3em] hover:bg-medical hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 mt-2">
+                Submit Request
+              </button>
+            </form>
+
+            <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-6 pt-5 border-t border-slate-100">
+              <a
+                href="tel:+23057092332"
+                className="flex items-center justify-center gap-2 text-slate-400 hover:text-navy transition-colors group"
+              >
+                <div className="p-1.5 rounded-full bg-slate-50 group-hover:bg-slate-100 transition-colors">
+                  <Phone size={12} />
+                </div>
+                <span className="text-[9px] font-bold tracking-widest uppercase">
+                  +230 5709 2332
+                </span>
+              </a>
+              <a
+                href="mailto:contactus@indiushealthcare.com"
+                className="flex items-center justify-center gap-2 text-slate-400 hover:text-navy transition-colors group"
+              >
+                <div className="p-1.5 rounded-full bg-slate-50 group-hover:bg-slate-100 transition-colors">
+                  <Mail size={12} />
+                </div>
+                <span className="text-[9px] font-bold tracking-widest uppercase">
+                  contactus@indiushealthcare.com
+                </span>
+              </a>
             </div>
-        </section>
-    );
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;

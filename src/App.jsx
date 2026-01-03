@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Hospitals from './components/Hospitals';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import LegalModal from './components/LegalModal';
-import IndiusIntro from './assets/images/logo/INDIUS.png';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Hospitals from "./components/Hospitals";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import LegalModal from "./components/LegalModal";
+import IndiusIntro from "./assets/images/logo/INDIUS.png";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [legal, setLegal] = useState({ isOpen: false, tab: 'privacy' });
+  const [legal, setLegal] = useState({ isOpen: false, tab: "privacy" });
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
+    // Force scroll to top on load/refresh
+    window.scrollTo(0, 0);
+
+    // Check if splash screen has been shown before
+    // Optional: if you want splash only once per session, use sessionStorage
+    // const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+      // sessionStorage.setItem('hasSeenSplash', 'true');
+    }, 3000);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -52,7 +63,11 @@ function App() {
         <Contact />
       </main>
       <Footer onOpenLegal={openLegal} />
-      <LegalModal isOpen={legal.isOpen} onClose={closeLegal} initialTab={legal.tab} />
+      <LegalModal
+        isOpen={legal.isOpen}
+        onClose={closeLegal}
+        initialTab={legal.tab}
+      />
     </div>
   );
 }

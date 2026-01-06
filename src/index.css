@@ -15,4 +15,29 @@ html {
 
 body {
   @apply font-sans antialiased text-gray-800 bg-white;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Boundary Protection & Scaling Logic */
+* {
+  box-sizing: border-box; /* Ensure padding doesn't break widths */
+}
+
+/* Universal Smart-Fit */
+section,
+div,
+footer,
+header,
+main {
+  max-width: 100%; /* Never exceed viewport width */
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%; /* Scale assets down if container shrinks */
+  height: auto;
 }

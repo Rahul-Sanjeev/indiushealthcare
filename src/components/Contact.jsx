@@ -3,7 +3,10 @@ import { Phone, Mail } from "lucide-react";
 
 const Contact = memo(() => {
   return (
-    <section id="contact" className="py-16 md:py-24 bg-slate-50">
+    <section
+      id="contact"
+      className="py-16 md:py-24 bg-slate-50 overflow-hidden"
+    >
       <div className="container mx-auto px-6">
         <div className="max-w-xl mx-auto bg-white rounded-[2rem] p-6 md:p-10 shadow-xl border border-slate-100 text-center relative overflow-hidden">
           <div className="relative z-10 w-full">

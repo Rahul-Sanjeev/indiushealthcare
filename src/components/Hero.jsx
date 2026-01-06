@@ -77,18 +77,12 @@ const Hero = memo(() => {
         })}
       </div>
 
-      <div className="relative z-10 h-full container mx-auto px-6 flex flex-col justify-start md:justify-center items-center text-center pt-40 md:pt-32">
-        <div className="relative h-32 md:h-40 w-full flex items-center justify-center mb-6 md:mb-10">
+      <div className="relative z-10 h-[100dvh] container mx-auto px-6 flex flex-col justify-end items-center text-center pb-56 md:pb-64">
+        <div className="relative h-auto w-full flex items-center justify-center mb-10 md:mb-14">
           <AnimatePresence initial={false}>
-            <motion.div
-              key={current}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute max-w-4xl"
-            >
-              <h1 className="text-3xl md:text-7xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl px-4">
+            <motion.div key={current} className="max-w-4xl w-full px-4">
+              {/* Ensure leading-tight is used to prevent line-height overlap */}
+              <h1 className="text-3xl md:text-6xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl">
                 {SLIDES[current].title}
               </h1>
             </motion.div>
@@ -108,9 +102,9 @@ const Hero = memo(() => {
           }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-medical text-white px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-white hover:text-navy transition-colors relative z-20"
+          className="inline-flex items-center gap-3 bg-medical text-white px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-white hover:text-navy transition-colors relative z-30"
         >
-          <MessageCircle size={16} /> Connect on WhatsApp
+          <MessageCircle size={18} /> Connect on WhatsApp
         </motion.a>
       </div>
 

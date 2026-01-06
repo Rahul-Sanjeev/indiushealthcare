@@ -7,6 +7,7 @@ import Hospitals from "./components/Hospitals";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import LegalModal from "./components/LegalModal";
+import WhatsAppButton from "./components/WhatsAppButton";
 import IndiusIntro from "./assets/images/logo/INDIUS.png";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
         <Contact />
       </main>
       <Footer onOpenLegal={openLegal} />
+      <WhatsAppButton />
       <LegalModal
         isOpen={legal.isOpen}
         onClose={closeLegal}

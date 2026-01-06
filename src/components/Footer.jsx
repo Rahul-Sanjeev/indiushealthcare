@@ -11,7 +11,10 @@ const Footer = memo(({ onOpenLegal }) => {
   );
 
   return (
-    <footer className="bg-navy/95 backdrop-blur-xl text-slate-400 py-16 border-t border-white/5 relative overflow-hidden">
+    <footer
+      id="footer"
+      className="bg-navy/95 backdrop-blur-xl text-slate-400 py-16 border-t border-white/5 relative overflow-hidden"
+    >
       {/* Subtle ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-medical/5 blur-[120px] pointer-events-none" />
 

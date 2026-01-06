@@ -78,10 +78,16 @@ const Hero = memo(() => {
       </div>
 
       <div className="relative z-10 h-[100dvh] container mx-auto px-6 flex flex-col justify-end items-center text-center pb-56 md:pb-64">
-        <div className="relative h-auto w-full flex items-center justify-center mb-10 md:mb-14">
-          <AnimatePresence initial={false}>
-            <motion.div key={current} className="max-w-4xl w-full px-4">
-              {/* Ensure leading-tight is used to prevent line-height overlap */}
+        <div className="relative min-h-[120px] w-full flex items-center justify-center mb-10 md:mb-14">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }} // Material Easing
+              className="max-w-4xl w-full px-4"
+            >
               <h1 className="text-3xl md:text-6xl font-light text-white tracking-tighter leading-tight drop-shadow-2xl">
                 {SLIDES[current].title}
               </h1>
@@ -89,23 +95,17 @@ const Hero = memo(() => {
           </AnimatePresence>
         </div>
 
-        <motion.a
-          href="https://wa.me/23057092332"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ willChange: "transform" }}
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-medical text-white px-8 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl hover:bg-white hover:text-navy transition-colors relative z-30"
+        {/* Placeholder to reserve space for the Global WhatsApp Button */}
+        {/* Placeholder to reserve space for the Global WhatsApp Button */}
+        <div
+          id="whatsapp-target"
+          className="inline-flex items-center gap-3 px-8 py-4 opacity-0 pointer-events-none"
         >
-          <MessageCircle size={18} /> Connect on WhatsApp
-        </motion.a>
+          <MessageCircle size={18} />
+          <span className="text-[10px] md:text-[12px] font-bold uppercase tracking-[0.2em]">
+            Connect on WhatsApp
+          </span>
+        </div>
       </div>
 
       <div className="absolute bottom-10 left-0 w-full flex flex-col items-center justify-end gap-8 pb-8 z-20">

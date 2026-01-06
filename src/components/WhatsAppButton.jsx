@@ -120,7 +120,7 @@ const WhatsAppButton = () => {
   return (
     <AnimatePresence>
       <motion.a
-        href="https://wa.me/23057092332"
+        href="https://wa.me/23058227575"
         target="_blank"
         rel="noopener noreferrer"
         layoutId="whatsapp-main"

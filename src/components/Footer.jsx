@@ -26,9 +26,9 @@ const Footer = memo(({ onOpenLegal }) => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-medical/5 blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-center md:text-left">
           {/* Brand Column */}
-          <div className="flex flex-col items-start gap-4">
+          <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-3">
               <img
                 src={IndiusLogoWhite}
@@ -36,7 +36,7 @@ const Footer = memo(({ onOpenLegal }) => {
                 className="h-10 w-auto object-contain"
               />
               <div className="flex flex-col">
-                <div className="flex flex-row gap-2 font-black text-base tracking-tighter leading-none text-white justify-start">
+                <div className="flex flex-row gap-2 font-black text-base tracking-tighter leading-none text-white justify-center md:justify-start">
                   INDIUS{" "}
                   <span className="block font-bold tracking-[0.2em] uppercase opacity-60 text-white">
                     Healthcare
@@ -44,65 +44,59 @@ const Footer = memo(({ onOpenLegal }) => {
                 </div>
               </div>
             </div>
-            <p className="text-sm font-light leading-relaxed opacity-70 max-w-xs text-left">
+            <p className="text-sm font-light leading-relaxed opacity-70 max-w-xs mx-auto md:mx-0">
               Connecting Mauritius to India's premier medical institutions with
               transparency and care.
             </p>
           </div>
 
           {/* Links Columns */}
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center md:items-start">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 opacity-90">
               Explore
             </h4>
-            <nav className="flex flex-col gap-3 text-sm font-medium tracking-wide">
-              <a
-                href="#home"
-                className="hover:text-medical transition-colors text-left"
-              >
+            <nav className="flex flex-col gap-3 text-sm font-medium tracking-wide w-full items-center md:items-start">
+              <a href="#home" className="hover:text-medical transition-colors">
                 Home
               </a>
-              <a
-                href="#about"
-                className="hover:text-medical transition-colors text-left"
-              >
+              <a href="#about" className="hover:text-medical transition-colors">
                 About
               </a>
               <a
                 href="#hospitals"
-                className="hover:text-medical transition-colors text-left"
+                className="hover:text-medical transition-colors"
               >
                 Hospitals
               </a>
               <a
                 href="#contact"
-                className="hover:text-medical transition-colors text-left"
+                className="hover:text-medical transition-colors"
               >
                 Contact
               </a>
             </nav>
           </div>
 
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center md:items-start">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 opacity-90">
               Legal
             </h4>
-            <nav className="flex flex-col gap-3 text-sm font-medium tracking-wide">
+            <nav className="flex flex-col gap-3 text-sm font-medium tracking-wide w-full items-center md:items-start">
               <button
                 onClick={() => handleLegalClick("privacy")}
-                className="hover:text-medical transition-colors text-left"
+                className="hover:text-medical transition-colors"
               >
                 Privacy Policy
               </button>
               <button
                 onClick={() => handleLegalClick("terms")}
-                className="hover:text-medical transition-colors text-left"
+                className="hover:text-medical transition-colors"
               >
                 Terms of Service
               </button>
               <button
                 onClick={() => handleLegalClick("patient")}
-                className="hover:text-medical transition-colors text-left"
+                className="hover:text-medical transition-colors"
               >
                 Patient Agreement
               </button>
@@ -110,19 +104,19 @@ const Footer = memo(({ onOpenLegal }) => {
           </div>
 
           {/* Connect Column */}
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-center md:items-start">
             <h4 className="text-white text-xs font-bold uppercase tracking-widest mb-6 opacity-90">
               Connect
             </h4>
 
             <div className="flex flex-col gap-4 mb-6">
-              <div className="flex items-start gap-3">
+              <div className="flex items-center md:items-start gap-3 justify-center md:justify-start">
                 <MapPin size={16} className="text-medical mt-0.5 shrink-0" />
                 <span className="text-sm font-medium text-slate-400">
                   Lallmatie, Mauritius
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 justify-center md:justify-start">
                 <Phone size={16} className="text-medical shrink-0" />
                 <a
                   href="tel:+23058227575"
@@ -131,7 +125,7 @@ const Footer = memo(({ onOpenLegal }) => {
                   +230 5822 7575
                 </a>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 justify-center md:justify-start">
                 <MessageCircle size={16} className="text-medical shrink-0" />
                 <a
                   href="https://wa.me/23058227575"
@@ -167,7 +161,7 @@ const Footer = memo(({ onOpenLegal }) => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p className="text-[10px] font-medium uppercase tracking-widest text-slate-600">
             © 2025 Indius Healthcare
           </p>

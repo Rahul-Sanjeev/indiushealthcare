@@ -46,7 +46,7 @@ const About = memo(() => {
       <div className="container mx-auto px-6">
         {/* Vision & Identity Section */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 mb-20 md:mb-24 items-start">
-          {/* Left Column: Vision */}
+          {/* Left Column: Mission & Vision */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,16 +54,36 @@ const About = memo(() => {
             transition={{ duration: 0.8 }}
             className="md:sticky md:top-32"
           >
-            <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">
-              Our Vision
-            </span>
-            <div className="border-l-4 border-medical pl-6 md:pl-8">
-              <p className="text-2xl md:text-3xl font-light text-navy leading-relaxed tracking-tight">
-                "To be recognised as a leading global facilitator for pioneering
-                ethical medical tourism that empowers patients to confidently
-                access world-class medical care for enhancing their quality of
-                life and overall well-being."
-              </p>
+            {/* Mission Section */}
+            <div className="mb-12">
+              <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">
+                Our Mission
+              </span>
+              <div className="border-l-4 border-medical pl-6 md:pl-8">
+                <p className="text-xl md:text-2xl font-light text-navy leading-relaxed tracking-tight">
+                  "To curate a seamless medical journey with a focus on making
+                  international healthcare accessible beyond borders by
+                  connecting patients with trusted providers in order to ensure
+                  a safe and efficient treatment along with personalised care
+                  plans offering comprehensive support from diagnosis to
+                  recovery."
+                </p>
+              </div>
+            </div>
+
+            {/* Vision Section */}
+            <div>
+              <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">
+                Our Vision
+              </span>
+              <div className="border-l-4 border-medical pl-6 md:pl-8">
+                <p className="text-xl md:text-2xl font-light text-navy leading-relaxed tracking-tight">
+                  "To be recognised as a leading global facilitator for
+                  pioneering ethical medical tourism that empowers patients to
+                  confidently access world-class medical care for enhancing
+                  their quality of life and overall well-being."
+                </p>
+              </div>
             </div>
           </motion.div>
 

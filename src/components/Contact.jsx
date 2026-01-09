@@ -92,7 +92,7 @@ const Contact = memo(() => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
-                      placeholder="Full Name"
+                      placeholder="Enter patient's full legal name"
                     />
                   </div>
                   <div className="group">
@@ -106,7 +106,7 @@ const Contact = memo(() => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
-                      placeholder="+230 1234 5678"
+                      placeholder="Contact number"
                     />
                   </div>
                 </div>
@@ -122,7 +122,7 @@ const Contact = memo(() => {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-medical focus:bg-white transition-all placeholder:text-slate-300"
-                    placeholder="name@example.com"
+                    placeholder="Email address"
                   />
                 </div>
 
@@ -149,14 +149,14 @@ const Contact = memo(() => {
 
             <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-6 pt-5 border-t border-slate-100">
               <a
-                href="tel:+23057092332"
+                href="tel:+23058227575"
                 className="flex items-center justify-center gap-2 text-slate-400 hover:text-navy transition-colors group"
               >
                 <div className="p-1.5 rounded-full bg-slate-50 group-hover:bg-slate-100 transition-colors">
                   <Phone size={12} />
                 </div>
                 <span className="text-[9px] font-bold tracking-widest uppercase">
-                  +230 5709 2332
+                  +230 5822 7575
                 </span>
               </a>
               <a

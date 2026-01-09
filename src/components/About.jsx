@@ -57,7 +57,7 @@ const About = memo(() => {
             {/* Mission Section */}
             <div className="mb-12">
               <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">
-                Our Mission
+                Mission
               </span>
               <div className="border-l-4 border-medical pl-6 md:pl-8">
                 <p className="text-xl md:text-2xl font-light text-navy leading-relaxed tracking-tight">
@@ -74,7 +74,7 @@ const About = memo(() => {
             {/* Vision Section */}
             <div>
               <span className="text-medical text-[10px] font-bold uppercase tracking-[0.4em] block mb-6">
-                Our Vision
+                Vision
               </span>
               <div className="border-l-4 border-medical pl-6 md:pl-8">
                 <p className="text-xl md:text-2xl font-light text-navy leading-relaxed tracking-tight">
